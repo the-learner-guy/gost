@@ -1,0 +1,31 @@
+on: 
+  release:
+    types: [created]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [android, linux, windows]
+        goarch: [arm, arm64, "386", amd64]
+        exclude:
+          - goarch: arm
+            goos: android
+          - goarch: "386"
+            goos: android
+          - goarch: amd64
+            goos: android
+          - goarch: arm
+            goos: windows
+          - goarch: arm64
+            goos: windows
+    steps:
+    - uses: actions/checkout@v2
+    - uses: wangyoucao577/go-release-action@v1.18
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        project_path: "./cmd/gost"
