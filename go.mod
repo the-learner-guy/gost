@@ -26,8 +26,9 @@ require (
 	github.com/lucas-clemente/aes12 v0.0.0-20171027163421-cd47fb39b79f // indirect
 	github.com/lucas-clemente/quic-go v0.10.0
 	github.com/lucas-clemente/quic-go-certificates v0.0.0-20160823095156-d2f86524cced // indirect
-	github.com/miekg/dns v1.1.41
+	github.com/miekg/dns v1.1.43
 	github.com/milosgajdos/tenus v0.0.3
+	github.com/onsi/gomega v1.15.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/ryanuber/go-glob v1.0.0
 	github.com/shadowsocks/go-shadowsocks2 v0.1.4
@@ -37,9 +38,9 @@ require (
 	github.com/templexxx/xor v0.0.0-20191217153810-f85b25db303b // indirect
 	github.com/tjfoc/gmsm v1.4.0 // indirect
 	github.com/xtaci/kcp-go v5.4.20+incompatible
+	github.com/xtaci/lossyconn v0.0.0-20200209145036-adba10fffc37 // indirect
 	github.com/xtaci/smux v1.5.15
 	github.com/xtaci/tcpraw v1.2.25
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
-	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
-	golang.org/x/text v0.3.5 // indirect
+	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
 )
