@@ -8,6 +8,8 @@ require (
 	github.com/LiamHaworth/go-tproxy v0.0.0-20190726054950-ef7efd7f24ed
 	github.com/Yawning/chacha20 v0.0.0-20170904085104-e3b1f968fc63 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
+	github.com/bifurcation/mint v0.0.0-20181105071958-a14404e9a861 // indirect
+	github.com/cheekybits/genny v1.0.0 // indirect
 	github.com/coreos/go-iptables v0.5.0 // indirect
 	github.com/docker/libcontainer v2.2.1+incompatible
 	github.com/ginuerzh/gosocks4 v0.0.1
@@ -18,9 +20,12 @@ require (
 	github.com/gobwas/glob v0.2.3
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/gorilla/websocket v1.4.2
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/klauspost/compress v1.11.12
 	github.com/klauspost/reedsolomon v1.9.12 // indirect
-	github.com/lucas-clemente/quic-go v0.22.0
+	github.com/lucas-clemente/aes12 v0.0.0-20171027163421-cd47fb39b79f // indirect
+	github.com/lucas-clemente/quic-go v0.10.0
+	github.com/lucas-clemente/quic-go-certificates v0.0.0-20160823095156-d2f86524cced // indirect
 	github.com/miekg/dns v1.1.43
 	github.com/milosgajdos/tenus v0.0.3
 	github.com/onsi/gomega v1.15.0 // indirect
