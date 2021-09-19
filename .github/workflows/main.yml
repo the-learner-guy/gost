@@ -3,6 +3,13 @@ on:
     types: [created]
 
 jobs:
+  prebuild:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run go mod tidy
+      run: |
+        go mod tidy
   releases-matrix:
     name: Release Go Binary
     runs-on: ubuntu-latest
