@@ -3,13 +3,15 @@ on:
     types: [created]
 
 jobs:
-  #prebuild:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #  - uses: actions/checkout@v2
-  #  - name: Run go mod tidy
-  #    run: |
-  #      go mod tidy
+  prebuild:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Clean go cache and modcache
+      run: |
+        #go mod tidy
+        go clean --cache
+        go clean --modcache
   releases-matrix:
     name: Release Go Binary
     runs-on: ubuntu-latest
