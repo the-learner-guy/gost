@@ -78,7 +78,7 @@ var (
 	DefaultTLSConfig *tls.Config
 
 	// DefaultUserAgent is the default HTTP User-Agent header used by HTTP and websocket.
-	DefaultUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36"
+	DefaultUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.92 Safari/537.36"
 
 	// DefaultMTU is the default mtu for tun/tap device
 	DefaultMTU = 1350
