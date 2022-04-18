@@ -43,5 +43,5 @@ jobs:
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         project_path: "./cmd/gost"
-        if: ${{ matrix.goarch == 'arm' }}
-        build_command: 'GOARM=7 go build'
+        build_command: make
+
