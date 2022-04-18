@@ -25,8 +25,8 @@ jobs:
         goos: [android, linux, windows]
         goarch: [arm, arm64, "386", amd64]
         exclude:
-          #- goarch: arm
-          #  goos: android
+          - goarch: arm
+            goos: android
           - goarch: "386"
             goos: android
           - goarch: amd64
