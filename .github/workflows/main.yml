@@ -42,5 +42,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
-        # project_path: "./cmd/gost"
-        build_command: make
+        project_path: "./cmd/gost"
+        # build_command: make
