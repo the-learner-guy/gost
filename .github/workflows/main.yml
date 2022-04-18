@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-go@v2
       with:
-        go-version: '1.17'
+        go-version: '1.18'
     - name: Clean go cache and modcache
       run: |
         go version
@@ -25,8 +25,8 @@ jobs:
         goos: [android, linux, windows]
         goarch: [arm, arm64, "386", amd64]
         exclude:
-          - goarch: arm
-            goos: android
+          #- goarch: arm
+          #  goos: android
           - goarch: "386"
             goos: android
           - goarch: amd64
@@ -37,9 +37,11 @@ jobs:
             goos: windows
     steps:
     - uses: actions/checkout@v2
-    - uses: wangyoucao577/go-release-action@v1.22
+    - uses: wangyoucao577/go-release-action@v1.26
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         project_path: "./cmd/gost"
+        if: ${{ matrix.goarch == 'arm' }}
+        build_command: 'GOARM=7 go build'
