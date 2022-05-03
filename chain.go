@@ -3,6 +3,7 @@ package gost
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 	"syscall"
 	"time"
@@ -20,6 +21,7 @@ type Chain struct {
 	isRoute    bool
 	Retries    int
 	Mark       int
+	Interface  string
 	nodeGroups []*NodeGroup
 	route      []Node // nodes in the selected route
 }
@@ -36,10 +38,14 @@ func NewChain(nodes ...Node) *Chain {
 
 // newRoute creates a chain route.
 // a chain route is the final route after node selection.
-func newRoute(nodes ...Node) *Chain {
-	chain := NewChain(nodes...)
-	chain.isRoute = true
-	return chain
+func (c *Chain) newRoute(nodes ...Node) *Chain {
+	route := NewChain(nodes...)
+	route.isRoute = true
+	if !c.IsEmpty() {
+		route.Interface = c.Interface
+		route.Mark = c.Mark
+	}
+	return route
 }
 
 // Nodes returns the proxy nodes that the chain holds.
@@ -137,6 +143,9 @@ func (c *Chain) dialWithOptions(ctx context.Context, network, address string, op
 	if options == nil {
 		options = &ChainOptions{}
 	}
+	if c == nil {
+		c = &Chain{}
+	}
 	route, err := c.selectRouteFor(address)
 	if err != nil {
 		return nil, err
@@ -145,6 +154,9 @@ func (c *Chain) dialWithOptions(ctx context.Context, network, address string, op
 	ipAddr := address
 	if address != "" {
 		ipAddr = c.resolve(address, options.Resolver, options.Hosts)
+	}
+	if ipAddr == "" {
+		return nil, fmt.Errorf("resolver: domain %s does not exists", address)
 	}
 
 	timeout := options.Timeout
@@ -161,6 +173,18 @@ func (c *Chain) dialWithOptions(ctx context.Context, network, address string, op
 					log.Logf("net dialer set mark %d error: %s", c.Mark, ex)
 				} else {
 					// log.Logf("net dialer set mark %d success", options.Mark)
+				}
+			})
+		}
+	}
+
+	if c.Interface != "" {
+		controlFunction = func(_, _ string, cc syscall.RawConn) error {
+			return cc.Control(func(fd uintptr) {
+				err := setSocketInterface(int(fd), c.Interface)
+
+				if err != nil {
+					log.Logf("net dialer set interface %s error: %s", c.Interface, err)
 				}
 			})
 		}
@@ -210,9 +234,11 @@ func (*Chain) resolve(addr string, resolver Resolver, hosts *Hosts) string {
 		if err != nil {
 			log.Logf("[resolver] %s: %v", host, err)
 		}
-		if len(ips) > 0 {
-			return net.JoinHostPort(ips[0].String(), port)
+		if len(ips) == 0 {
+			log.Logf("[resolver] %s: domain does not exists", host)
+			return ""
 		}
+		return net.JoinHostPort(ips[0].String(), port)
 	}
 	return addr
 }
@@ -303,13 +329,13 @@ func (c *Chain) selectRoute() (route *Chain, err error) {
 // selectRouteFor selects route with bypass testing.
 func (c *Chain) selectRouteFor(addr string) (route *Chain, err error) {
 	if c.IsEmpty() {
-		return newRoute(), nil
+		return c.newRoute(), nil
 	}
 	if c.isRoute {
 		return c, nil
 	}
 
-	route = newRoute()
+	route = c.newRoute()
 	var nl []Node
 
 	for _, group := range c.nodeGroups {
@@ -327,7 +353,7 @@ func (c *Chain) selectRouteFor(addr string) (route *Chain, err error) {
 			node.DialOptions = append(node.DialOptions,
 				ChainDialOption(route),
 			)
-			route = newRoute() // cutoff the chain for multiplex node.
+			route = c.newRoute() // cutoff the chain for multiplex node.
 		}
 
 		route.AddNode(node)
