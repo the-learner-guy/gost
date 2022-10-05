@@ -49,9 +49,9 @@ func (c *http2Connector) ConnectContext(ctx context.Context, conn net.Conn, netw
 		option(opts)
 	}
 	ua := opts.UserAgent
-	if ua == "" {
+	//if ua == "" {
 		ua = DefaultUserAgent
-	}
+	//}
 
 	cc, ok := conn.(*http2ClientConn)
 	if !ok {
