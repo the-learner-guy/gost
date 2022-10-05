@@ -48,9 +48,9 @@ func (c *httpConnector) ConnectContext(ctx context.Context, conn net.Conn, netwo
 		timeout = ConnectTimeout
 	}
 	ua := opts.UserAgent
-	if ua == "" {
+	//if ua == "" {
 		ua = DefaultUserAgent
-	}
+	//}
 
 	conn.SetDeadline(time.Now().Add(timeout))
 	defer conn.SetDeadline(time.Time{})
