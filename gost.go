@@ -78,7 +78,7 @@ var (
 	DefaultTLSConfig *tls.Config
 
 	// DefaultUserAgent is the default HTTP User-Agent header used by HTTP and websocket.
-	DefaultUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.92 Safari/537.36"
+	DefaultUserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.5195.147 Safari/537.36"
 
 	DefaultProxyAgent = "gost/" + Version
 
